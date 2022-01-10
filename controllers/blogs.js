@@ -28,7 +28,7 @@ blogRouter.post('/:id/comments', async (request,response) => {
   blog.comments = blog.comments.concat(request.body.comment)
   await blog.save()
 
-  response.json(blog)
+  response.status(201).json(blog)
 	
 })
 
