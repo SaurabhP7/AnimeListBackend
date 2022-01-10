@@ -22,11 +22,13 @@ blogRouter.get('/:id', async (request, response) => {
 
 blogRouter.post('/:id/comments', async (request,response) => {
   
-  const comment= request.body.comment
-  const blog=await Blog.findById(request.params.id) 
-  blog.comments=blog.comments.concat(comment) 
-  const savedBlog=await blog.save() 
-  response.status(201).json(savedBlog)
+  const blog = await Blog
+    .findById(request.params.id)
+
+  blog.comments = blog.comments.concat(request.body.comment)
+  await blog.save()
+
+  response.json(blog)
 	
 })
 
