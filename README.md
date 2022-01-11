@@ -1,1 +1,1 @@
-https://anime-latest.herokuapp.com/
+https://animehq.herokuapp.com/
