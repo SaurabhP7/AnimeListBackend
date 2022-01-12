@@ -3,27 +3,27 @@ const dummy=()=>{
   return 1 
 }
 
-const totalLikes=(blogs)=>{
-  let sum=blogs.reduce((sum,blog)=>sum+blog.likes,0) 
+const totalLikes=(animes)=>{
+  let sum=animes.reduce((sum,anime)=>sum+anime.likes,0) 
   return sum
 }
 
-const favouriteBlog=(blogs)=>{
+const favouriteAnime=(animes)=>{
 
-  if(blogs.length===0){
+  if(animes.length===0){
 	  return {}
   }
 
-  let maxBlogLikes= blogs.reduce((max_blog, current_blog) =>
-  	 (current_blog.likes > max_blog.likes) ? current_blog : max_blog
-  ,blogs[0]) 
+  let maxAnimeLikes= animes.reduce((max_anime, current_anime) =>
+  	 (current_anime.likes > max_anime.likes) ? current_anime : max_anime
+  ,animes[0]) 
 
-  return maxBlogLikes
+  return maxAnimeLikes
 	
 }
 
 module.exports={
   dummy,
   totalLikes,
-  favouriteBlog
+  favouriteAnime
 }

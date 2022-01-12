@@ -5,7 +5,7 @@ const app=express()
 const cors=require('cors')
 
 const loginRouter=require('./controllers/login')
-const blogsRouter=require('./controllers/blogs')
+const animeRouter=require('./controllers/animes')
 const usersRouter=require('./controllers/users')
 
 const middleware=require('./utils/middleware')
@@ -29,7 +29,7 @@ app.use(middleware.requestLogger)
 
 app.use(middleware.tokenExtractor)
 app.use('/api/login',loginRouter)
-app.use('/api/blogs',blogsRouter)
+app.use('/api/animes',animeRouter)
 app.use('/api/users',usersRouter)
 
 if(process.env.NODE_ENV==='test'){

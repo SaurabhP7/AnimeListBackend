@@ -20,10 +20,10 @@ const userSchema=new mongoose.Schema({
     required:true
   },
 
-  blogs:[
+  animes:[
     {
       type:mongoose.Schema.Types.ObjectId,
-      ref:'Blog'
+      ref:'Anime'
     }
   ]
 

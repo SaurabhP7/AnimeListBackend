@@ -10,31 +10,31 @@ require('dotenv').config()
 const listHelper=require('../utils/list_helper')
 const helper=require('./test_helper')
 
-const Blog=require('../models/blog')
+const Anime=require('../models/anime')
 const User = require('../models/users')
 
 let token=null 
 
 beforeEach(async ()=>{
-  await Blog.deleteMany({})
+  await Anime.deleteMany({})
 
-  for(let blog of helper.initialblogs){
-	 let blogObject=new Blog(blog)
-	 await blogObject.save()
+  for(let anime of helper.initialanimes){
+	 let animeObject=new Anime(anime)
+	 await animeObject.save()
   }
 
   const response=await api.post('/api/login')
-  .send({
-		username:process.env.username,
-		password:process.env.password
-	})
+    .send({
+      username:process.env.username,
+      password:process.env.password
+    })
 
   token=response.body.token
 })
 
 test('dummy returns one',()=>{
-  const blogs=[]
-  const result=listHelper.dummy(blogs)
+  const animes=[]
+  const result=listHelper.dummy(animes)
   expect(result).toBe(1)
 })
 
@@ -45,13 +45,13 @@ describe('total likes', () => {
     expect(result).toBe(0)
   })
 
-  test('when list has only one blog, equals the likes of that', () => {
-    const result = listHelper.totalLikes(helper.listWithOneBlog)
+  test('when list has only one anime, equals the likes of that', () => {
+    const result = listHelper.totalLikes(helper.listWithOneAnime)
     expect(result).toBe(5)
   })
 
   test('of a bigger list is calculated right',()=>{
-	  const result=listHelper.totalLikes(helper.initialblogs)
+	  const result=listHelper.totalLikes(helper.initialanimes)
 	  expect(result).toBe(36)
   })
 
@@ -59,11 +59,11 @@ describe('total likes', () => {
 
 describe('backend testing',()=>{
 
-  test('correct amount of blog posts', async ()=>{
+  test('correct amount of anime posts', async ()=>{
 
-    let count=helper.initialblogs.length
+    let count=helper.initialanimes.length
 		
-    const response=await api.get('/api/blogs').set('Authorization',`Bearer ${token}`)
+    const response=await api.get('/api/animes').set('Authorization',`Bearer ${token}`)
 							
     expect(response.body).toHaveLength(count)
 
@@ -71,61 +71,61 @@ describe('backend testing',()=>{
 
   test('check for presence of id', async ()=>{
 		
-    const blogsAtStart=await helper.blogsInDb()
-    const blog=blogsAtStart[0]
-    const response=await api.get(`/api/blogs/${blog.id}`)
+    const animesAtStart=await helper.animesInDb()
+    const anime=animesAtStart[0]
+    const response=await api.get(`/api/animes/${anime.id}`)
 	  .set('Authorization',`Bearer ${token}`)
       .expect(200)
       .expect('Content-Type', /application\/json/)
 
-    expect(response.body).toEqual({id:blog.id,...blog})
+    expect(response.body).toEqual({id:anime.id,...anime})
 
   })
 
-  test('blog added successfully ', async()=>{
+  test('anime added successfully ', async()=>{
 
-    const blogsAtStart=await helper.blogsInDb() 
-    const newBlog={
+    const animesAtStart=await helper.animesInDb() 
+    const newAnime={
       title: 'Full stack open',
       author: 'Prof Matti',
       url: 'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
       likes: 5,
     }
 
-    await api.post('/api/blogs')
-      .send(newBlog)
+    await api.post('/api/animes')
+      .send(newAnime)
 	  .set('Authorization',`Bearer ${token}`)
       .expect(201)
       .expect('Content-Type',/application\/json/)
 
-    const blogsAtEnd=await helper.blogsInDb()
-    expect(blogsAtEnd).toHaveLength(blogsAtStart.length+1)
+    const animesAtEnd=await helper.animesInDb()
+    expect(animesAtEnd).toHaveLength(animesAtStart.length+1)
 
   })
 
-  test('blog is successfully deleted',async()=>{
+  test('anime is successfully deleted',async()=>{
 
-    const blogsAtStart=await helper.blogsInDb()
-    const blogToDelete=blogsAtStart[0]
+    const animesAtStart=await helper.animesInDb()
+    const animeToDelete=animesAtStart[0]
 
     await api
-      .delete(`/api/blogs/${blogToDelete.id}`)
+      .delete(`/api/animes/${animeToDelete.id}`)
       .expect(204)
 
-    const blogsAtEnd=await helper.blogsInDb()
-    expect(blogsAtEnd).toHaveLength(blogsAtStart.length-1)
+    const animesAtEnd=await helper.animesInDb()
+    expect(animesAtEnd).toHaveLength(animesAtStart.length-1)
 
-    const titles=blogsAtEnd.map(blog=>blog.title)
-    expect(titles).not.toContain(blogToDelete.title)
+    const titles=animesAtEnd.map(anime=>anime.title)
+    expect(titles).not.toContain(animeToDelete.title)
   })
 
-  test('put blog is success' , async()=>{
+  test('put anime is success' , async()=>{
 		
-    const blogsAtStart=await helper.blogsInDb() 
+    const animesAtStart=await helper.animesInDb() 
 		
-    const blogToUpdate=blogsAtStart[0] 
+    const animeToUpdate=animesAtStart[0] 
 		
-    const updatedBlog={
+    const updatedAnime={
       title: 'React patterns',
       author: 'Michael Chan',
       url: 'https://reactpatterns.com/',
@@ -133,18 +133,18 @@ describe('backend testing',()=>{
     }
 
 
-    await api.put(`/api/blogs/${blogToUpdate.id}`)
-      .send(updatedBlog)
+    await api.put(`/api/animes/${animeToUpdate.id}`)
+      .send(updatedAnime)
 	  .set('Authorization',`Bearer ${token}`)
       .expect(200)
       .expect('Content-Type',/application\/json/)
 
 
-    const blogsAtEnd=await helper.blogsInDb()
+    const animesAtEnd=await helper.animesInDb()
 		
-    expect(blogsAtEnd).toHaveLength(blogsAtStart.length)
+    expect(animesAtEnd).toHaveLength(animesAtStart.length)
 		
-    expect(blogsAtEnd[0].likes).not.toBe(blogsAtStart[0].likes)
+    expect(animesAtEnd[0].likes).not.toBe(animesAtStart[0].likes)
 
   })
 	

@@ -1,7 +1,7 @@
-const Blog=require('../models/blog')
+const Anime=require('../models/anime')
 const User=require('../models/users')
 
-const listWithOneBlog = [
+const listWithOneAnime = [
 	{
 	  _id: '5a422aa71b54a676234d17f8',
 	  title: 'Go To Statement Considered Harmful',
@@ -12,7 +12,7 @@ const listWithOneBlog = [
 	}
   ]
   
-  const initialblogs = [
+  const initialanimes = [
 	{
 		_id: '5a422a851b54a676234d17f7',
 		title: 'React patterns',
@@ -41,7 +41,7 @@ const listWithOneBlog = [
 		_id: '5a422b891b54a676234d17fa',
 		title: 'First class tests',
 		author: 'Robert C. Martin',
-		url: 'http://blog.cleancoder.com/uncle-bob/2017/05/05/TestDefinitions.htmll',
+		url: 'http://anime.cleancoder.com/uncle-bob/2017/05/05/TestDefinitions.htmll',
 		likes: 10,
 		__v: 0
 	},
@@ -49,7 +49,7 @@ const listWithOneBlog = [
 		_id: '5a422ba71b54a676234d17fb',
 		title: 'TDD harms architecture',
 		author: 'Robert C. Martin',
-		url: 'http://blog.cleancoder.com/uncle-bob/2017/03/03/TDD-Harms-Architecture.html',
+		url: 'http://anime.cleancoder.com/uncle-bob/2017/03/03/TDD-Harms-Architecture.html',
 		likes: 0,
 		__v: 0
 	},
@@ -57,15 +57,15 @@ const listWithOneBlog = [
 		_id: '5a422bc61b54a676234d17fc',
 		title: 'Type wars',
 		author: 'Robert C. Martin',
-		url: 'http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html',
+		url: 'http://anime.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html',
 		likes: 2,
 		__v: 0
 	}  
   ]
 
-  const blogsInDb=async()=>{
-	  const blogs=await Blog.find({})
-	  return blogs.map(blog => blog.toJSON())
+  const animesInDb=async()=>{
+	  const animes=await Anime.find({})
+	  return animes.map(anime => anime.toJSON())
   }
 
   const usersInDb=async()=>{
@@ -74,8 +74,8 @@ const listWithOneBlog = [
 }
 
   module.exports={
-	  listWithOneBlog,
-	  initialblogs,
-	  blogsInDb,
+	  listWithOneAnime,
+	  initialanimes,
+	  animesInDb,
 	  usersInDb
   }

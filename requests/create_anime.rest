@@ -1,4 +1,4 @@
-POST http://localhost:3003/api/blogs
+POST http://localhost:3003/api/animes
 Content-Type: application/json
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImplZmZlcnkiLCJpZCI6IjYxODEyY2M0OWJmZmRjMjBkMDU3YjE0MyIsImlhdCI6MTYzNTg1OTAzNywiZXhwIjoxNjM1ODYyNjM3fQ.uUMMvZIyRTw9M_DJ578wp45vzFDmLrgQcZmn25POgO8
 
